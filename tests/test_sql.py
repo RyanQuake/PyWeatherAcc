@@ -14,7 +14,7 @@ TABLES = {}
 TABLES['weatherData'] = (
     "CREATE TABLE weatherData("
     "  CityName varchar(32) DEFAULT 0,"
-    "  Date date DEFAULT 0,"
+    "  Date varchar(32) DEFAULT 0,"
     "  `Temp. +5 [C]` int(16) DEFAULT -255,"
     "  `Temp. +4 [C]` int(16) DEFAULT -255,"
     "  `Temp. +3 [C]` int(16) DEFAULT -255,"
@@ -60,7 +60,17 @@ try:
     sql = "INSERT INTO weatherData(CityName, \
        Date, `Temp. +5 [C]` ) \
        VALUES ('%s', '%s', '%d')" % \
-       ('Munich', time.strftime("%Y%m%d"), 10)
+       ('Munich', time.strftime("%Y-%m-%d"), 10)
+    cursor.execute(sql)
+    cnx.commit()
+except mysql.connector.Error as err:
+    print(err.msg)
+    cnx.rollback()
+# UPDATE [table name] SET Select_priv = 'Y',Insert_priv = 'Y',Update_priv = 'Y' where [field name] = 'user';
+try:
+    sql = "UPDATE weatherData SET `Temp. +5 [C]`\
+       =('%s') WHERE Date = %s" % \
+       (50,time.strftime("%Y-%m-%d"))
     cursor.execute(sql)
     cnx.commit()
 except mysql.connector.Error as err:
@@ -71,7 +81,7 @@ try:
     sql = "INSERT INTO weatherData(\
         `Temp. +5 [C]`, Date, `Temp. +4 [C]` ) \
        VALUES ('%d', '%s', '%d')" % \
-       (1 ,time.strftime("%Y%m%d"), 10)
+       (1 ,time.strftime("%Y-%m-%d"), 10)
     cursor.execute(sql)
     cnx.commit()
 except mysql.connector.Error as err:
