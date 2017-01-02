@@ -1,6 +1,12 @@
-[SQLSettings]
-user: foo 
+[sql]
+user: foo
 password: bar
 host: 127.0.0.1
-database: weatherData
+database: weathermuc
 raise_on_warnings: True
+
+[openweathermap]
+apikey: FFFFFFFFFFFFFFFFFFFFFFFFFFF
+townkey: Munich
+countrykey: DE
+time: 12:00:00
