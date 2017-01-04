@@ -1,5 +1,5 @@
 [sql]
-user: for
+user: foo
 password: bar
 host: 127.0.0.1
 database: weatherdata
@@ -7,7 +7,13 @@ raise_on_warnings: True
 tablename: weathermuc
 
 [openweathermap]
-apikey: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+apikey: FFFFFFFFFFFFFFFFFFFFFFFFF
 provider: openweathermap
-townkey: Munich
+townname: Munich
 countrykey: DE
+
+[wunderground]
+apikey: FFFFFFFFFFFF
+provider: weatherunderground
+townname: Munich
+townkey: q/zmw:00000.1.10870

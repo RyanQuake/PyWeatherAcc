@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode
 
+# TODO: document api
+
 def connectSQL(i_config):
     try:
         cnx = mysql.connector.connect(**i_config)
@@ -68,14 +70,14 @@ def createEntry(i_config, i_tablename, i_dictData):
 
         cursor.execute(sql_base+sql_keys+sql_values)
         cnx.commit()
-        print "Created weatherData entry for "+i_dictData['Date']
+        print "Created weatherData entry for "+i_dictData['Date']+" of "+i_dictData['Provider']
     except mysql.connector.Error as err:
         print("SQL Error: " + err.msg)
         cnx.rollback()
 
     disconnectSQL(cnx,cursor)
 
-def dateNotExists(i_config, i_tablename, i_date):
+def dateNotExists(i_config, i_tablename, i_date, i_provider):
     cnx, cursor = connectSQL(i_config)
     l_retval=True
 
@@ -84,8 +86,8 @@ def dateNotExists(i_config, i_tablename, i_date):
     row = cursor.fetchone()
 
     while row is not None:
-        if i_date in row:
-            l_retval=False
+        if i_date in row and i_provider in row:
+                l_retval=False
         row = cursor.fetchone()
 
     disconnectSQL(cnx,cursor)
