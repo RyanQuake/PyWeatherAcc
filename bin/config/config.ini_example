@@ -1,12 +1,13 @@
 [sql]
-user: foo
+user: for
 password: bar
 host: 127.0.0.1
-database: weathermuc
+database: weatherdata
 raise_on_warnings: True
+tablename: weathermuc
 
 [openweathermap]
-apikey: FFFFFFFFFFFFFFFFFFFFFFFFFFF
+apikey: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+provider: openweathermap
 townkey: Munich
 countrykey: DE
-time: 12:00:00
