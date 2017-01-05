@@ -1,5 +1,4 @@
 # PyWeatherAcc
-<h1> Summary </h1>
 <paragraph> The purpose of this project is to get a feeling which accuracy several weather services are providing. Therefore the following tools/languages where used:</paragraph> 
 <ul>
   <li>Python: Programming language of choice</li>
@@ -40,4 +39,5 @@ changed storing concept, to store json object
 <h4> 0.1.0 </h4>
 basic concept implementation, support for OpenWeatherMap
 
-<small>Keywords: python, git, github, weather, accuracy, mysql, sql, api, data analysis, raw data</small>
+<h6> Keywords </h6>
+<small>python, git, github, weather, accuracy, mysql, sql, api, data analysis, raw data</small>
