@@ -40,7 +40,6 @@ def validateConfigFile():
             except:
                 raise validationError("Error: WeatherService config is incorrect. See example file.")
 
-
 def configSectionMap(section):
     dict1 = {}
     try:

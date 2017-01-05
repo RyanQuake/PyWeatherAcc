@@ -7,10 +7,10 @@ raise_on_warnings: True
 tablename: weathermuc
 
 [openweathermap]
-apikey: FFFFFFFFFFFFFFFFFFFFFFFFF
+apikey: FFFFFFFFFFFFFFFFFFFFFFFFFFF
 provider: openweathermap
 townname: Munich
-countrykey: DE
+townkey: 6940463
 
 [wunderground]
 apikey: FFFFFFFFFFFF

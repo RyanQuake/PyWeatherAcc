@@ -82,7 +82,7 @@ def dateNotExists(i_config, i_tablename, i_date, i_provider):
     cnx, cursor = connectSQL(i_config)
     l_retval=True
 
-    cursor.execute("SELECT * FROM %s" % i_tablename)
+    cursor.execute("SELECT Date,Provider,CityName FROM %s" % i_tablename)
 
     row = cursor.fetchone()
 
