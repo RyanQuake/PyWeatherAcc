@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 
 # TODO: document api
+# TODO: extend api for data analysis
 
 def connectSQL(i_config):
     try:
