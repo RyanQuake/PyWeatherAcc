@@ -25,7 +25,7 @@ def getData(i_apiKey, i_townKey, i_countryKey):
         TODAY = TT_TODAY + datetime.timedelta(days=i)
         TIME  = datetime.datetime(100,1,1,00,00,00)
         for j in range(0,gl_TT_MESSPOINTS):
-            gl_TT_STAMPS[iterator] = str(TODAY)+" "+str(TIME.time())
+            gl_TT_STAMPS[iterator] = str(TODAY)+" "+str(TIME.time())+" +"+str(i)
             TIME = TIME + datetime.timedelta(hours=gl_TT_INTERVAL)
             iterator=iterator+1
 
@@ -38,7 +38,7 @@ def getData(i_apiKey, i_townKey, i_countryKey):
 
     for timestamp in gl_TT_STAMPS:
         for element in jdata['list']:
-            if timestamp in element['dt_txt']:
+            if element['dt_txt'] in timestamp:
                 retVal_dict[timestamp] = element
 
     return retVal_dict
