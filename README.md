@@ -6,7 +6,7 @@
   <li>JSON: data object layout of choice</li>
 </ul> 
 
-<h2> supported weather services </h2>
+<h2> Supported weather services </h2>
 <ul>
   <li>OpenWeatherMap (http://openweathermap.org/)</li>
   <li>Weather Underground (https://www.wunderground.com/)</li>
