@@ -7,9 +7,8 @@ from timestampGEN import timestampGEN
 # TODO: document api
 # TODO: extend api for data analysis
 
-def getData(i_apiKey, i_townKey, i_countryKey):
-    OWM_TOWN=i_townKey+","+i_countryKey
-    OWM_FOR_WEATHER="forecast?q="+i_townKey
+def getData(i_apiKey, i_townKey):
+    OWM_FOR_WEATHER="forecast?id="+i_townKey
     OWM_BASE_URL="http://api.openweathermap.org/data/2.5/"
     OWM_APPID=str(i_apiKey)
     OWM_APPID_CALL="&APPID="+OWM_APPID

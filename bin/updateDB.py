@@ -2,6 +2,7 @@ from mySQLAPI         import mySQLAPI
 from openweatherAPI   import openweatherAPI
 from wundergroundAPI  import wundergroundAPI
 from config           import configUtils
+from pprint           import pprint
 import json
 
 # TODO: cleanup and documentation
@@ -9,56 +10,42 @@ import json
 # control/debug variables
 create_SQL_table=False # do create a sql table
 
+# Verify config file
+try:
+  configUtils.validateConfigFile()
+except configUtils.validationError as exception:
+  print exception.message
+  exit(1)
+
 # get SQL settings
-l_username  = configUtils.ConfigSectionMap("sql")['user']
-l_password  = configUtils.ConfigSectionMap("sql")['password']
-l_host      = configUtils.ConfigSectionMap("sql")['host']
-l_database  = configUtils.ConfigSectionMap("sql")['database']
-l_row       = configUtils.ConfigSectionMap("sql")['raise_on_warnings']
-l_tablename = configUtils.ConfigSectionMap("sql")['tablename']
+l_config, l_tablename = configUtils.getSQLData()
 
-l_config      = {
-              'user': l_username,
-              'password': l_password,
-              'host': l_host,
-              'database': l_database,
-              'raise_on_warnings': bool(l_row),
-              }
+# get weatherServices
+l_weatherServices = configUtils.getWeatherServices()
 
-# get openweathermap settings
-l_OWM_apiKey      = configUtils.ConfigSectionMap("openweathermap")['apikey']
-l_OWM_provider    = configUtils.ConfigSectionMap("openweathermap")['provider']
-l_OWM_townName    = configUtils.ConfigSectionMap("openweathermap")['townname']
-l_OWM_countryKey  = configUtils.ConfigSectionMap("openweathermap")['countrykey']
-l_OWM_header      = {}
-l_OWM_header["CityName"] = l_OWM_townName
-l_OWM_header["Provider"] = l_OWM_provider
+# init arrays for data
+l_headerArray = [None] * len(l_weatherServices.keys())
+l_fetchArray  = [None] * len(l_weatherServices.keys())
 
-# get wunderground settings
-l_WG_apiKey      = configUtils.ConfigSectionMap("wunderground")['apikey']
-l_WG_provider    = configUtils.ConfigSectionMap("wunderground")['provider']
-l_WG_townName    = configUtils.ConfigSectionMap("wunderground")['townname']
-l_WG_townKey     = configUtils.ConfigSectionMap("wunderground")['townkey']
-l_WG_header      = {}
-l_WG_header["CityName"] = l_WG_townName
-l_WG_header["Provider"] = l_WG_provider
+# fetch data
+iterator = 0
+for weatherService, configValues in l_weatherServices.iteritems():
+  l_headerArray[iterator]={}
+  l_headerArray[iterator]["CityName"] = configValues['townname']
+  l_headerArray[iterator]["Provider"] = configValues['provider']
+  if "openweathermap" in weatherService:
+    l_fetchArray[iterator] = openweatherAPI.getData(configValues['apikey'],configValues['townkey'])
+  if "wunderground" in weatherService:
+    l_fetchArray[iterator]  = wundergroundAPI.getData(configValues['apikey'],configValues['townkey'])
+
+  iterator = iterator + 1
 
 # set up sql table, this will delete existing tables
 if create_SQL_table:
   mySQLAPI.createSQLTable(l_config,l_tablename)
 
-# get data from openweatherAPI
-l_OWM_Data = openweatherAPI.getData(l_OWM_apiKey,l_OWM_townName,l_OWM_countryKey)
-# get data from wundergroundAPI
-l_WG_Data  = wundergroundAPI.getData(l_WG_apiKey,l_WG_townKey)
-
-# generating arrays which for data upload
-l_headerArray = [l_OWM_header , l_WG_header]
-l_fetchArray  = [l_OWM_Data , l_WG_Data]
-
 # upload data to sql for defined data
 for dataElement, headerElement in zip(l_fetchArray,l_headerArray):
-
   l_sqlData = [None] * len(dataElement.keys())
 
   # layout data for sql write, append header
