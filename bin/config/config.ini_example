@@ -1,0 +1,19 @@
+[sql]
+user: foo
+password: bar
+host: 127.0.0.1
+database: weatherdata
+raise_on_warnings: True
+tablename: weathermuc
+
+[openweathermap]
+apikey: FFFFFFFFFFFFFFFFFFFFFFFFFFF
+provider: openweathermap
+townname: Munich
+townkey: 6940463
+
+[wunderground]
+apikey: FFFFFFFFFFFF
+provider: weatherunderground
+townname: Munich
+townkey: q/zmw:00000.1.10870
