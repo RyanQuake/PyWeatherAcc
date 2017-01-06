@@ -21,9 +21,9 @@ l_weatherServices = configUtils.getWeatherServices()
 l_someValue = mySQLAPI.queryByDate(l_config,l_tablename,"2017-01-06","openweathermap")
 
 for item in l_someValue:
-    CityName = item[0]
-    Date     = item[1]
-    Provider = item[2]
-    jsonObj  = json.loads(item[3])
+    f_cityName = item[0]
+    f_date     = item[1]
+    f_provider = item[2]
+    f_jsonObj  = json.loads(item[3])
 
-    print Date, jsonObj["main"]["temp"]
+    print f_Date, f_jsonObj["main"]["temp"]
