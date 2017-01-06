@@ -80,7 +80,7 @@ def createEntry(i_config, i_tablename, i_dictData):
 
 def dateNotExists(i_config, i_tablename, i_date, i_provider):
     cnx, cursor = connectSQL(i_config)
-    l_retval=True
+    l_retVal=True
 
     cursor.execute("SELECT Date,Provider,CityName FROM %s" % i_tablename)
 
@@ -88,8 +88,23 @@ def dateNotExists(i_config, i_tablename, i_date, i_provider):
 
     while row is not None:
         if i_date in row and i_provider in row:
-                l_retval=False
+                l_retVal=False
         row = cursor.fetchone()
 
     disconnectSQL(cnx,cursor)
-    return l_retval
+    return l_retVal
+
+def queryByDate(i_config,i_tablename,i_date,i_weatherservice):
+    l_retVal=[]
+    cnx, cursor = connectSQL(i_config)
+
+    l_sqlCommand = "SELECT * FROM {} WHERE (Date LIKE \"%{}%\" AND Provider LIKE \"%{}%\")".format(i_tablename,i_date,i_weatherservice)
+    cursor.execute(l_sqlCommand)
+
+    row = cursor.fetchone()
+    while row is not None:
+        l_retVal.append(row)
+        row = cursor.fetchone()
+
+    disconnectSQL(cnx,cursor)
+    return l_retVal
